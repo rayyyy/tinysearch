@@ -34,12 +34,12 @@ type PostingList struct {
 	*list.List
 }
 
-func NewPostingList(postings ...*Posting) *PostingList {
+func NewPostingList(postings ...*Posting) PostingList {
 	l := list.New()
 	for _, posting := range postings {
 		l.PushBack(posting)
 	}
-	return &PostingList{l}
+	return PostingList{l}
 }
 
 func (pl PostingList) add(posting *Posting) {
