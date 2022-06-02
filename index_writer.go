@@ -17,18 +17,20 @@ func NewIndexWriter(path string) *IndexWriter {
 	return &IndexWriter{path}
 }
 
+// インデックスをファイルに保存する
 func (w *IndexWriter) Flush(index *Index) error {
-	for term, postingList := range index.Dictionary {
-		if err := w.postingList(term, postingList); err != nil {
-			fmt.Printf("Error writing posting list for term %s: %s\n", term, err)
+	for term, postingsList := range index.Dictionary {
+		if err := w.postingsList(term, postingsList); err != nil {
+			fmt.Printf("failed to save %s postings list: %v", term, err)
 		}
 	}
-
 	return w.docCount(index.TotalDocsCount)
 }
 
-func (w *IndexWriter) postingList(term string, list PostingList) error {
-	bytes, err := json.Marshal(list)
+// ポスティングリストをファイルに保存する
+func (w *IndexWriter) postingsList(term string, postingsList PostingsList) error {
+
+	bytes, err := json.Marshal(postingsList)
 	if err != nil {
 		return err
 	}
@@ -45,10 +47,10 @@ func (w *IndexWriter) postingList(term string, list PostingList) error {
 	if err != nil {
 		return err
 	}
-
 	return writer.Flush()
 }
 
+// インデックスされたドキュメント総数をファイルに保存する
 func (w *IndexWriter) docCount(count int) error {
 	filename := filepath.Join(w.indexDir, "_0.dc")
 	file, err := os.Create(filename)

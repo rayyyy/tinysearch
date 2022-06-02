@@ -23,14 +23,14 @@ func TestUpdate(t *testing.T) {
 
 	actual := indexer.index
 	expected := &Index{
-		map[string]PostingList{
-			"better":  NewPostingList(NewPosting(2, 1)),
-			"do":      NewPostingList(NewPosting(0, 0)),
-			"no":      NewPostingList(NewPosting(1, 2), NewPosting(2, 0)),
-			"quarrel": NewPostingList(NewPosting(0, 2), NewPosting(1, 0)),
-			"sir":     NewPostingList(NewPosting(0, 3), NewPosting(1, 1, 3), NewPosting(3, 1)),
-			"well":    NewPostingList(NewPosting(3, 0)),
-			"you":     NewPostingList(NewPosting(0, 1)),
+		map[string]PostingsList{
+			"better":  NewPostingsList(NewPosting(2, 1)),
+			"do":      NewPostingsList(NewPosting(0, 0)),
+			"no":      NewPostingsList(NewPosting(1, 2), NewPosting(2, 0)),
+			"quarrel": NewPostingsList(NewPosting(0, 2), NewPosting(1, 0)),
+			"sir":     NewPostingsList(NewPosting(0, 3), NewPosting(1, 1, 3), NewPosting(3, 1)),
+			"well":    NewPostingsList(NewPosting(3, 0)),
+			"you":     NewPostingsList(NewPosting(0, 1)),
 		},
 		4,
 	}

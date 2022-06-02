@@ -10,7 +10,7 @@ type DocumentStore struct {
 }
 
 func NewDocumentStore(db *sql.DB) *DocumentStore {
-	return &DocumentStore{db}
+	return &DocumentStore{db: db}
 }
 
 func (ds *DocumentStore) save(title string) (DocumentID, error) {
@@ -21,4 +21,12 @@ func (ds *DocumentStore) save(title string) (DocumentID, error) {
 	}
 	id, err := result.LastInsertId()
 	return DocumentID(id), err
+}
+
+func (ds *DocumentStore) fetchTitle(docID DocumentID) (string, error) {
+	query := "SELECT document_title FROM documents WHERE document_id = ?"
+	row := ds.db.QueryRow(query, docID)
+	var title string
+	err := row.Scan(&title)
+	return title, err
 }
