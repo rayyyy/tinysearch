@@ -4,6 +4,7 @@ import (
 	"container/list"
 	"fmt"
 	"sort"
+	"strconv"
 	"strings"
 	"unicode/utf8"
 )
@@ -42,8 +43,8 @@ func NewPostingList(postings ...*Posting) PostingList {
 	return PostingList{l}
 }
 
-func (pl PostingList) add(posting *Posting) {
-	pl.PushBack(posting)
+func (pl PostingList) add(p *Posting) {
+	pl.PushBack(p)
 }
 
 func (pl PostingList) last() *Posting {
@@ -76,7 +77,7 @@ func (idx Index) String() string {
 	}
 	sort.Strings(keys)
 	strs := make([]string, len(keys))
-	format := "%-" + string(padding) + "s: %s"
+	format := "  [%-" + strconv.Itoa(padding) + "s] => %s"
 	for i, k := range keys {
 		if postingList, ok := idx.Dictionary[k]; ok {
 			strs[i] = fmt.Sprintf(format, k, postingList.String())

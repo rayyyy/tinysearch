@@ -15,10 +15,10 @@ func TestUpdate(t *testing.T) {
 		"Well, sir",
 	}
 
-	indexer := NewIndex(NewTokenizer())
+	indexer := NewIndexer(NewTokenizer())
 
 	for i, doc := range collection {
-		indexer.Update(DocumentID(i), strings.NewReader(doc))
+		indexer.update(DocumentID(i), strings.NewReader(doc))
 	}
 
 	actual := indexer.index
